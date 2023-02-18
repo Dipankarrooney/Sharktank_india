@@ -179,23 +179,122 @@ select 'Ghazal' as Name, sum(Ghazal_Amount_Invested) as Total_amount_invested_by
 on x.Name = y.Name
 
 
---joining all sharks records we get--
-
-
-
-
-
-
-
-
 -- which are the startups that had got highest investments by sharks--
 select a.* from
 (select brand,sector,Amount_Invested_lakhs, rank() over(partition by sector order by Amount_Invested_lakhs desc) as Highest_investment
 from sharktank where Amount_Invested_lakhs !=0) a
 where a.Highest_investment = 1
 
+use sharktank_india
 
+-- Joining all sharks data--
 
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_ashneer,y.Avg_amount_invested_by_ashneer
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Ashneer' as Name, count(Ashneer_Amount_Invested) as Total_deals_present from sharktank where Ashneer_Amount_Invested is not null) a
+join (select 'Ashneer' as Name, count(Ashneer_Equity_Taken) as Total_Equity_Taken from sharktank where Ashneer_Amount_Invested != 0) b
+on a.Name = b.Name) x
 
+inner join 
 
+(with a as (select Ashneer_Amount_Invested,Ashneer_Equity_Taken from sharktank where Ashneer_Amount_Invested != 0 and Ashneer_Equity_Taken !=0)
+select 'Ashneer' as Name, sum(Ashneer_Amount_Invested) as Total_amount_invested_by_ashneer, avg(Ashneer_Equity_Taken) as Avg_amount_invested_by_ashneer from a) y
 
+on x.Name = y.Name) a 
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Namita,y.Avg_amount_invested_by_Namita
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Namita' as Name, count(Namita_Amount_Invested) as Total_deals_present from sharktank where Namita_Amount_Invested is not null) a
+join (select 'Namita' as Name, count(Namita_Equity_Taken) as Total_Equity_Taken from sharktank where Namita_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Namita_Amount_Invested,Namita_Equity_Taken from sharktank where Namita_Amount_Invested != 0 and Namita_Equity_Taken !=0)
+select 'Namita' as Name, sum(Namita_Amount_Invested) as Total_amount_invested_by_Namita, avg(Namita_Equity_Taken) as Avg_amount_invested_by_Namita from a) y
+
+on x.Name = y.Name) b
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Anupam,y.Avg_amount_invested_by_Anupam
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Anupam' as Name, count(Anupam_Amount_Invested) as Total_deals_present from sharktank where Anupam_Amount_Invested is not null) a
+join (select 'Anupam' as Name, count(Anupam_Equity_Taken) as Total_Equity_Taken from sharktank where Anupam_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Anupam_Amount_Invested,Anupam_Equity_Taken from sharktank where Anupam_Amount_Invested != 0 and Anupam_Equity_Taken !=0)
+select 'Anupam' as Name, sum(Anupam_Amount_Invested) as Total_amount_invested_by_Anupam, avg(Anupam_Equity_Taken) as Avg_amount_invested_by_Anupam from a) y
+
+on x.Name = y.Name) c
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Vineeta,y.Avg_amount_invested_by_Vineeta
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Vineeta' as Name, count(Vineeta_Amount_Invested) as Total_deals_present from sharktank where Vineeta_Amount_Invested is not null) a
+join (select 'Vineeta' as Name, count(Vineeta_Equity_Taken) as Total_Equity_Taken from sharktank where Vineeta_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Vineeta_Amount_Invested,Vineeta_Equity_Taken from sharktank where Vineeta_Amount_Invested != 0 and Vineeta_Equity_Taken !=0)
+select 'Vineeta' as Name, sum(Vineeta_Amount_Invested) as Total_amount_invested_by_Vineeta, avg(Vineeta_Equity_Taken) as Avg_amount_invested_by_Vineeta from a) y
+
+on x.Name = y.Name) d
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Aman,y.Avg_amount_invested_by_Aman
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Aman' as Name, count(Aman_Amount_Invested) as Total_deals_present from sharktank where Aman_Amount_Invested is not null) a
+join (select 'Aman' as Name, count(Aman_Equity_Taken) as Total_Equity_Taken from sharktank where Aman_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Aman_Amount_Invested,Aman_Equity_Taken from sharktank where Aman_Amount_Invested != 0 and Aman_Equity_Taken !=0)
+select 'Aman' as Name, sum(Aman_Amount_Invested) as Total_amount_invested_by_Aman, avg(Aman_Equity_Taken) as Avg_amount_invested_by_Aman from a) y
+
+on x.Name = y.Name) e
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Peyush,y.Avg_amount_invested_by_Peyush
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Peyush' as Name, count(Peyush_Amount_Invested) as Total_deals_present from sharktank where Peyush_Amount_Invested is not null) a
+join (select 'Peyush' as Name, count(Peyush_Equity_Taken) as Total_Equity_Taken from sharktank where Peyush_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Peyush_Amount_Invested,Peyush_Equity_Taken from sharktank where Peyush_Amount_Invested != 0 and Peyush_Equity_Taken !=0)
+select 'Peyush' as Name, sum(Peyush_Amount_Invested) as Total_amount_invested_by_Peyush, avg(Peyush_Equity_Taken) as Avg_amount_invested_by_Peyush from a) y
+
+on x.Name = y.Name) f
+
+union 
+
+select * from (select x.Name,x.Total_deals_present,x.Total_Equity_Taken,y.Total_amount_invested_by_Ghazal,y.Avg_amount_invested_by_Ghazal
+from
+(select a.Name,a.Total_deals_present,b.Total_Equity_Taken
+from (select 'Ghazal' as Name, count(Ghazal_Amount_Invested) as Total_deals_present from sharktank where Ghazal_Amount_Invested is not null) a
+join (select 'Ghazal' as Name, count(Ghazal_Equity_Taken) as Total_Equity_Taken from sharktank where Ghazal_Equity_Taken != 0) b
+on a.Name = b.Name) x
+
+inner join 
+
+(with a as (select Ghazal_Amount_Invested,Ghazal_Equity_Taken from sharktank where Ghazal_Amount_Invested != 0 and Ghazal_Equity_Taken !=0)
+select 'Ghazal' as Name, sum(Ghazal_Amount_Invested) as Total_amount_invested_by_Ghazal, avg(Ghazal_Equity_Taken) as Avg_amount_invested_by_Ghazal from a) y
+
+on x.Name = y.Name) g
